@@ -14,7 +14,7 @@ def beam(BB_File):
 
 
 	#Creating list of dates as datetime objects
-	date = []
+	perHour = []
 	perDay = []
 	for row in csvFile:
 		year = int(row[0])
@@ -25,13 +25,16 @@ def beam(BB_File):
 		second = int(row[5])
 
 		perDay.append(datetime(year, month, day)) #BB only ocunting days
-		date.append(datetime(year, month, day,hour)) #BB per hour
+		perHour.append(datetime(year, month, day,hour)) #BB per hour
 
-
+	perHour = {z:perHour.count(z) for z in perHour}
 	#Finding average uses per day
 	perDay = {z:perDay.count(z)/2 for z in perDay}
 	averagePerDay = np.mean(perDay.values())
 
+	#making indexes for per hour and per day
+	indexHour = np.arange(len(perHour))
+	indexDay = np.arange(len(perDay))
 
 	#return the date entries, per day list, and average per day number
-	return date, perDay, averagePerDay
+	return perHour, perDay, averagePerDay, indexHour, indexDay

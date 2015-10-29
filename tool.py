@@ -16,7 +16,7 @@ roomTH = glob.glob("data/room/"+room+"/TH*")
 
 ## BEAM BREAK
 
-date, perDay, averagePerDay = beam(roomBB[0])
+perHour, perDay, averagePerDay, indexHour, indexDay = beam(roomBB[0])
 
 ## TEMPERATURE AND HUMIDITY
 
@@ -36,11 +36,10 @@ roomSummary(tempData,humData,averagePerDay)
 fig, ax = plt.subplots()
 
 bar_width = .7
-y = {z:date.count(z) for z in date} #counting occurances/date
-index = np.arange(len(y))
-BB = plt.bar(index, y.values(), bar_width)
 
-plt.xticks(index+bar_width/2,y.keys(), rotation=15)
+BB = plt.bar(indexHour, perHour.values(), bar_width)
+
+plt.xticks(indexHour,perHour.keys(), rotation=15)
 plt.title('Beam Break Frequency')
 ax.set_xlabel('Date')
 ax.set_ylabel('Frequency (Breaks/Day)')
