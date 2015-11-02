@@ -28,9 +28,12 @@ def beam(BB_File):
 		perHour.append(datetime(year, month, day,hour)) #BB per hour
 
 	perHour = {z:perHour.count(z) for z in perHour}
+	perHour = sorted(perHour.items())
+	
 	#Finding average uses per day
 	perDay = {z:perDay.count(z)/2 for z in perDay}
-	averagePerDay = np.mean(perDay.values())
+	perDay = sorted(perDay.items())
+	averagePerDay = np.mean([item[1] for item in perDay])
 
 	#making indexes for per hour and per day
 	indexHour = np.arange(len(perHour))

@@ -37,9 +37,9 @@ fig, ax = plt.subplots()
 
 bar_width = .7
 
-BB = plt.bar(indexHour, perHour.values(), bar_width)
+BB = plt.bar(indexHour, [item[1] for item in perHour], bar_width)
 
-plt.xticks(indexHour,perHour.keys(), rotation=15)
+plt.xticks(indexHour,[item[0] for item in perHour], rotation=15)
 plt.title('Beam Break Frequency')
 ax.set_xlabel('Date')
 ax.set_ylabel('Frequency (Breaks/Day)')
