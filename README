@@ -6,20 +6,23 @@ It takes data from a sensor which measures temperature, humidity, and beam break
 
 To use type "python tool.py" in the terminal after selecting the project directory.
 
+When asked for room number enter an integer. You must have already placed the appropriate files in the rooms respective folder. 
+
 
 DATA STRUCTURE:
 
-The temperature and humidity data from each sensor is stored in one while (TH_roomnumber.txt) and the beam break data is stored in another (BB_roomnumber.txt) where roomnumber is the assigned number to the room.
+The temperature and humidity data from each sensor is stored in one while (TH_roomnumber.txt) and the beam break data is stored in another (BB_roomnumber.txt) where roomnumber the assigned number to the room.
 
-Store data for each room in its respective directory within the data folder.
+Store data for each room in its respective directory within the data folder. For example data from room 20 would go in “data/room/20/“.
 
 SCRIPTS:
 
 Scripts used to analyse the data can be found in the scripts directory. The main file “tool.py” is runs all the scripts to produce graphs and analysis.
 
 REQUIREMENTS:
-Python 2.7.10
-
+Python 2.7.10 or greater
+MatPlotLib
+Num.py
 
 
 
