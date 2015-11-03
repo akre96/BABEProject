@@ -11,7 +11,7 @@ When asked for room number enter an integer. You must have already placed the ap
 
 DATA STRUCTURE:
 
-The temperature and humidity data from each sensor is stored in one while (TH_roomnumber.txt) and the beam break data is stored in another (BB_roomnumber.txt) where roomnumber the assigned number to the room.
+The temperature and humidity data from each sensor is stored in one  file (TH_roomnumber.txt) and the beam break data is stored in another (BB_roomnumber.txt) where roomnumber the assigned number to the room. (eg. “BB_21.txt”)
 
 Store data for each room in its respective directory within the data folder. For example data from room 20 would go in “data/room/20/“.
 
