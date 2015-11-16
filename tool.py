@@ -20,14 +20,12 @@ perHour, perDay, averagePerDay, indexHour, indexDay = beam(roomBB[0])
 
 ## TEMPERATURE AND HUMIDITY
 
-date2, tempData, humData = tempHum(roomTH[0])
+thDate, tempData, humData = tempHum(roomTH[0])
 
 
 
 ## ROOM SUMMARY
 roomSummary(tempData,humData,averagePerDay)
-
-
 
 
 ##PLOTTING GRAPHS
@@ -37,9 +35,9 @@ fig, ax = plt.subplots()
 
 bar_width = .7
 
-BB = plt.bar(indexHour, [item[1] for item in perHour], bar_width)
+BB = plt.bar(indexDay, [item[1] for item in perDay], bar_width)
 
-plt.xticks(indexHour,[item[0] for item in perHour], rotation=15)
+plt.xticks(indexDay,[item[0] for item in perDay], rotation=15)
 plt.title('Beam Break Frequency')
 ax.set_xlabel('Date')
 ax.set_ylabel('Frequency (Breaks/Day)')
@@ -47,16 +45,16 @@ ax.set_ylabel('Frequency (Breaks/Day)')
 #plotting temperature and humidity
 fig = plt.figure()
 tp = fig.add_subplot(2,1,1)
-x1 = tp.plot_date(date2,tempData['list'], xdate=True, ydate=False,fmt = 'ro-')
-plt.xticks(rotation=0)
+x1 = tp.plot_date(thDate,tempData['list'], xdate=True, ydate=False,fmt = 'ro-')
+plt.xticks(rotation=10)
 plt.setp(x1,linewidth=3,markersize = 2)
 tp.set_xlabel('Time (minutes)')
 tp.set_ylabel('Temperature (degrees Celsius)')
 plt.title('Temperature of Room')
 
 hm = fig.add_subplot(2,1,2)
-x2 = hm.plot_date(date2,humData['list'], xdate=True, ydate=False, fmt = 'bo-')
-plt.xticks(rotation=0)
+x2 = hm.plot_date(thDate,humData['list'], xdate=True, ydate=False, fmt = 'bo-')
+plt.xticks(rotation=10)
 plt.setp(x2,linewidth=3,markersize = 2)
 plt.title('Humidity of Room')
 hm.set_xlabel('Time (minutes)')
