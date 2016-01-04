@@ -25,9 +25,9 @@ def tempHum(TH_File):
 		second = int(row[5])
 		temp = float(row[6])
 		hum = float(row[7])
-
-		date.append(datetime(year, month, day,hour,minute,second))
-		th.append([temp,hum])
+		if year == 15 and month >= 11: 
+			date.append(datetime(year, month, day,hour,minute,second))
+			th.append([temp,hum])
 	th = np.array(th)
 
 
