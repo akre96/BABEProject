@@ -61,8 +61,8 @@ def tempHum(TH_File):
 		if hum >= 90:
 			highHumInd.append(index)
 
-	timeBelowSixty= len(lowHumInd)*2 #in minutes
-	timeAboveNinety = len(highHumInd)*2
+	timeBelowSixty= len(lowHumInd)*15 #in minutes
+	timeAboveNinety = len(highHumInd)*15
 
 
 	tempData = {

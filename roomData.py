@@ -1,3 +1,4 @@
+# Use this script in order to analyze a single room
 from sys import argv
 import glob
 from datetime import datetime

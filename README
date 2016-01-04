@@ -17,7 +17,7 @@ Store data for each room in its respective directory within the data folder. For
 
 SCRIPTS:
 
-Scripts used to analyse the data can be found in the scripts directory. The main file “tool.py” is runs all the scripts to produce graphs and analysis.
+Scripts used to analyse the data can be found in the scripts directory. To analyze data from individual rooms run "roomData.py" for an analysis of all rooms run "allRooms.py". Currently allRoom.py only returns average temperature of all rooms.
 
 REQUIREMENTS:
 Python 2.7.10 or greater
