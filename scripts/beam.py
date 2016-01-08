@@ -31,7 +31,7 @@ def beam(BB_File):
 	perHour = sorted(perHour.items())
 	
 	#Finding average uses per day
-	perDay = {z:perDay.count(z)/2 for z in perDay}
+	perDay = {z:perDay.count(z)/4 for z in perDay}
 	perDay = sorted(perDay.items())
 	averagePerDay = np.mean([item[1] for item in perDay])   
 
