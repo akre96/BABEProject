@@ -1,4 +1,5 @@
 # Use this script in order to analyze a single room
+import argparse
 from sys import argv
 import glob
 from datetime import datetime
@@ -10,14 +11,20 @@ from scripts.tempHum import tempHum
 from scripts.beam import beam
 from scripts.roomSummary import roomSummary
 
+
+#Adding support for command line arguments
+parser = argparse.ArgumentParser(description='Process Data from a single room')
+parser.add_argument('room', type=str, help='A room number to analyze')
+args = parser.parse_args()
+
 #Finding room to analyze and formatting it as file paths
-room = raw_input('Which room number would you like to analyze? \n>>')
+room =  args.room
 roomBB = glob.glob("data/room/"+room+"/BB*")
 roomTH = glob.glob("data/room/"+room+"/TH*")
 
 ## BEAM BREAK
 
-perHour, perDay, averagePerDay, indexHour, indexDay = beam(roomBB[0])
+perDay, averagePerDay, indexDay = beam(roomBB[0])
 
 ## TEMPERATURE AND HUMIDITY
 
