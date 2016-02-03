@@ -1,4 +1,11 @@
-	## BEAM BREAK
+## BEAM BREAK
+# Summary: Analyses data of a single beam break file.
+#
+#	Input: Path to a csv file containing beam break data
+#	Output: 
+#		-perDay: Array of room uses per day of recorded data
+#		-averagePerDay: float of average uses of room per day
+#		-indexDay: An indexing array the length of perDay
 
 import csv
 from datetime import datetime

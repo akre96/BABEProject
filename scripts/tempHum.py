@@ -1,3 +1,15 @@
+##TEMPERATURE AND HUMIDITY
+#
+# Summary:
+#
+# Input: Path to a csv file containing temperature and humidity data
+# Output: 
+#	- date: Array of dates when data was collected
+#	- tempData: Dictionary containing an array of temperatures for each date,
+#		and several other analysis of the temperature
+#	- humData: Dictionary containing an array of humidity for each date, and
+#		several other analysis of the humidity
+
 import csv
 from datetime import datetime
 import numpy as np

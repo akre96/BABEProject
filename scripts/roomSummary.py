@@ -1,5 +1,10 @@
+##ROOM SUMMARY
+#	Prints color formatted summary of a single rooms beam break 
+#	and temp/humidity data to terminal.
+
+
 def	roomSummary(tempData,humData,averagePerDay):
-	#SUMMARY
+
 	class bcolors:
 	    HEADER = '\033[95m'
 	    OKBLUE = '\033[94m'
