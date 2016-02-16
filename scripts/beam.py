@@ -34,8 +34,7 @@ def beam(BB_File):
 		perDay.append(datetime(year, month, day)) #BB only ocunting days
 		perHour.append(datetime(year, month, day,hour)) #BB per hour
 
-#	perHour = {z:perHour.count(z) for z in perHour}
-#	perHour = sorted(perHour.items())
+
 	
 	#Finding average uses per day
 	perDay = {z:perDay.count(z)/5 for z in perDay}

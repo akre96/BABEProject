@@ -7,6 +7,9 @@ from scripts.tempHum import tempHum
 from scripts.beam import beam
 from scripts.sheetUse import sheetUse
 import matplotlib.pyplot as plt
+from matplotlib.backends.backend_pdf import PdfPages
+from datetime import datetime
+
 
 
 #Adding support for command line arguments
@@ -52,7 +55,7 @@ for room in [f for f in os.listdir(currentDir) if not f.startswith('.')]:
 
 
 responseSheet = os.getcwd() + '/data/other/responses.csv'
-sheetRooms, sheetAverage = sheetUse(responseSheet)
+sheetRooms, sheetAverage, sheetDict = sheetUse(responseSheet)
 
 
 notWorking.sort()
@@ -64,55 +67,75 @@ roomIndex = sorted(roomDict.keys())
 averageBB = [roomDict[x] for x in roomIndex]
 
 roomNum = list(xrange(len(averageBB)))
-sheetRoomNum = list(xrange(len(sheetAverage)))
+sheetBB = list(xrange(len(sheetAverage)))
 
-#Figure 1 contains the average uses per day from Beam break followed by the uses recorded on lactation room sign in sheet
-if (args.log == 1):
-	fig1 = plt.figure()
-	bb = fig1.add_subplot(2,1,1)
-	x1 = bb.bar(roomNum,averageBB, align = "center", color = "g")
-	plt.title("Average Uses per Day by Beam Break")
-	plt.xticks(roomNum,roomIndex)
-	bb.set_ylabel('Uses')
-	bb.set_xlabel('Room')
+combinedRooms = []
+combinedSensor = []
+combinedSheet = []
+for x in sheetRooms:
+	if (x in roomDict):
+		combinedRooms.append(x);
+		combinedSensor.append(roomDict[x])
+		combinedSheet.append(sheetDict[x])
 
-	su = fig1.add_subplot(2,1,2)
-	x1 = su.bar(sheetRoomNum,sheetAverage, align = "center", color = "y")
-	plt.title("Average Uses per Day by Sign-In Log")
-	plt.xticks(sheetRoomNum,sheetRooms)
-	su.set_ylabel('Uses')
-	su.set_xlabel('Room')
 
-	plt.tight_layout()
-else:
+#Save each graph as a page of a PDF file with current date as title
+d = datetime.today()
+d = d.strftime("%m-%d-%Y")
+graphLoc = "graphs/AllRooms_"+d+".pdf"
+with PdfPages(graphLoc) as pdf:
+	#Figure 1 displays with optional -l argument
+	#Figure 1 contains the average uses per day from Beam break vs the uses recorded on lactation room sign in sheet
+	if (args.log == 1):
+		ind = np.arange(len(combinedRooms))
+		width = 0.4
+
+		fig, ax = plt.subplots()
+		rects1 = ax.bar(ind, combinedSensor, width, color='r')
+		rects2 = ax.bar(ind + width, combinedSheet, width, color='y')
+
+
+		ax.set_ylabel('Room Usage')
+		ax.set_title('Lactation room usage')
+		ax.set_xticks(ind + width)
+		ax.set_xticklabels(combinedRooms)
+
+		ax.legend((rects1[0], rects2[0]), ('Sensor', 'Log-in Sheet'))
+		pdf.savefig()
+		plt.close()
+
+
+
 	fig1 = plt.figure()
 	bb = fig1.add_subplot(1,1,1)
 	x1 = bb.bar(roomNum,averageBB, align = "center", color = "g")
 	plt.title("Average Uses per Day by Beam Break")
 	plt.xticks(roomNum,roomIndex)
 	bb.set_ylabel('Uses')
-	bb.set_xlabel('Room')	
-
-#Figure 2 contains average temperature followed by humidity from sensors across all rooms
-fig2 = plt.figure()
-tp = fig2.add_subplot(2,1,1)
-x1 = tp.bar(roomNum, meanTemp, align = "center",color = "r")
-plt.xticks(roomNum,roomIndex)
-tp.set_xlabel('Room')
-tp.set_ylabel('Temperature (degrees Celsius)')
-plt.title('Average Temperature of Room')
-
-hm = fig2.add_subplot(2,1,2)
-x2 = hm.bar(roomNum, meanHum, align = "center", color = "b")
-plt.xticks(roomNum,roomIndex)
-hm.set_xlabel('Room')
-hm.set_ylabel("Humidty")
-plt.title("Average Humidity of Room")
-plt.tight_layout()
+	bb.set_xlabel('Room')
+	pdf.savefig()	
+	plt.close()
 
 
+	#Figure 2 contains average temperature followed by humidity from sensors across all rooms
+	fig2 = plt.figure()
+	tp = fig2.add_subplot(2,1,1)
+	x1 = tp.bar(roomNum, meanTemp, align = "center",color = "r")
+	plt.xticks(roomNum,roomIndex)
+	tp.set_xlabel('Room')
+	tp.set_ylabel('Temperature (degrees Celsius)')
+	plt.title('Average Temperature of Room')
 
+	hm = fig2.add_subplot(2,1,2)
+	x2 = hm.bar(roomNum, meanHum, align = "center", color = "b")
+	plt.xticks(roomNum,roomIndex)
+	hm.set_xlabel('Room')
+	hm.set_ylabel("Humidty")
+	plt.title("Average Humidity of Room")
+	plt.tight_layout()
 
+	pdf.savefig()
+	plt.close()
 
-plt.show()
+	
 

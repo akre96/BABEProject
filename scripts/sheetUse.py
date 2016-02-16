@@ -57,4 +57,4 @@ def sheetUse(Usage_Sheet):
 	sortRooms = sorted(averageDict.keys())
 	sortAvg = [averageDict[x] for x in sortRooms]
 		
-	return sortRooms, sortAvg
+	return sortRooms, sortAvg, averageDict

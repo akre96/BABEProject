@@ -30,6 +30,7 @@ def tempHum(TH_File):
 	th = []
 	for row in csvFile:
 		year = int(row[0])
+		year = 2000+year
 		month = int(row[1])
 		day = int(row[2])
 		hour = int(row[3])
@@ -37,7 +38,7 @@ def tempHum(TH_File):
 		second = int(row[5])
 		temp = float(row[6])
 		hum = float(row[7])
-		if year == 15 and month >= 11: 
+		if year == 2015 and month >= 11: 
 			date.append(datetime(year, month, day,hour,minute,second))
 			th.append([temp,hum])
 	th = np.array(th)

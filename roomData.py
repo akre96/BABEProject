@@ -33,7 +33,7 @@ thDate, tempData, humData = tempHum(roomTH[0])
 
 
 ## ROOM SUMMARY
-roomSummary(tempData,humData,averagePerDay)
+roomSummary(tempData,humData,averagePerDay,thDate)
 
 
 ##PLOTTING GRAPHS

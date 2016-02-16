@@ -3,7 +3,7 @@
 #	and temp/humidity data to terminal.
 
 
-def	roomSummary(tempData,humData,averagePerDay):
+def	roomSummary(tempData,humData,averagePerDay,date):
 
 	class bcolors:
 	    HEADER = '\033[95m'
@@ -32,5 +32,7 @@ def	roomSummary(tempData,humData,averagePerDay):
 	print 'Humidity Variance is: '+str(humData['var'])+' Percent Humidity'
 	print ' '
 	print 'Room uses per day: '+str(averagePerDay)+' Uses'
+	print ' '
+	print 'Last data entry: ' +date[-1].strftime('%b %d %Y')
 	print ' '
 	return
