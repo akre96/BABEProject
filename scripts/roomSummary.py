@@ -15,7 +15,7 @@ def	roomSummary(tempData,humData,averagePerDay,date):
 	    BOLD = '\033[1m'
 	    UNDERLINE = '\033[4m'
 
-	print bcolors.HEADER +'SUMMARY:' + bcolors.ENDC
+	print 'SUMMARY:'
 	print ' '
 	print 'Time below sixty: '+str(humData['belowSixty']/60)+' hours'
 	print 'Time above ninety: '+str(humData['aboveNinety']/60)+' hours'

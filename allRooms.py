@@ -14,11 +14,14 @@ from datetime import datetime
 
 #Adding support for command line arguments
 parser = argparse.ArgumentParser(description='Process Data from all rooms')
-parser.add_argument('-log', '-l', action='store_const',const=1,help='Include analysis from manual log in sheet')
+parser.add_argument('-log', '-l', action='store_const',const=1,help='Stops analysis from manual log in sheet')
+parser.add_argument('-day','-d', action='store_const',const=1, help='Stops filtering beambreak data from 8am-10pm')
+parser.add_argument('-week','-w', action='store_const',const=1, help='Stops filtering beambreak data for only weekdays')
 args = parser.parse_args()
 
 #establish path to file in order to analyze data
 currentDir = os.getcwd() +'/data/room'
+
 meanTemp=[]
 meanHum=[]
 averageBB = []
@@ -26,6 +29,8 @@ notWorking = []
 roomIndex=[]
 noData=[]
 roomDict={}
+day = True
+week = True
 
 #iterate through each room and collect temp, hum, and beam break data
 
@@ -37,16 +42,25 @@ for room in [f for f in os.listdir(currentDir) if not f.startswith('.')]:
 		try:
 			roomBB = glob.glob(currentRoom+'/BB*')
 			roomTH = glob.glob(currentRoom+'/TH*')
-
 			thDates, tempData, humData = tempHum(roomTH[0])
-			meanTemp.append(tempData['mean'])
-			meanHum.append(humData['mean'])
 
-			perDay, averagePerDay, indexDay = beam(roomBB[0])
-			roomDict[int(room)] = averagePerDay
-			averageBB.append(averagePerDay)
+			if (tempData['mean'] and humData['mean']):
 
-			roomIndex.append(room)
+				meanTemp.append(tempData['mean'])
+				meanHum.append(humData['mean'])
+
+				if args.day == 1:
+					day = False
+				if args.week == 1:
+					week = False
+				perDay, averagePerDay, indexDay = beam(roomBB[0],dayTime = day, weekDay = week)
+			
+				roomDict[int(room)] = averagePerDay
+				averageBB.append(averagePerDay)
+
+				roomIndex.append(room)
+			else:
+				notWorking.append(room)
 
 		except IndexError:
 			notWorking.append(room)
@@ -82,11 +96,25 @@ for x in sheetRooms:
 #Save each graph as a page of a PDF file with current date as title
 d = datetime.today()
 d = d.strftime("%m-%d-%Y")
-graphLoc = "graphs/AllRooms_"+d+".pdf"
+flag=""
+if args.log == 1:
+	flag =flag+ 'NoSheet_'
+
+if (args.day == 1):
+	flag = flag+'allDay'
+
+if args.week == 1:
+	flag = flag + 'allWeek'
+
+
+
+graphLoc = "graphs/AllRooms_"+flag+d+".pdf"
+
+
 with PdfPages(graphLoc) as pdf:
 	#Figure 1 displays with optional -l argument
 	#Figure 1 contains the average uses per day from Beam break vs the uses recorded on lactation room sign in sheet
-	if (args.log == 1):
+	if (args.log != 1):
 		ind = np.arange(len(combinedRooms))
 		width = 0.4
 
@@ -113,6 +141,11 @@ with PdfPages(graphLoc) as pdf:
 	plt.xticks(roomNum,roomIndex)
 	bb.set_ylabel('Uses')
 	bb.set_xlabel('Room')
+	swags = bb.patches
+	for swag, value in zip(swags,averageBB):
+		height = swag.get_height()
+		bb.text(swag.get_x()+swag.get_width()/2, height+2,value,ha="center",va="bottom")
+
 	pdf.savefig()	
 	plt.close()
 
@@ -125,6 +158,11 @@ with PdfPages(graphLoc) as pdf:
 	tp.set_xlabel('Room')
 	tp.set_ylabel('Temperature (degrees Celsius)')
 	plt.title('Average Temperature of Room')
+	swag1 = tp.patches
+	meanTemp = np.around(meanTemp,decimals = 1)
+	for swag, value in zip(swag1,meanTemp):
+		height = swag.get_height()
+		tp.text(swag.get_x()+swag.get_width()/2, height - 3,value,ha="center",va="bottom")
 
 	hm = fig2.add_subplot(2,1,2)
 	x2 = hm.bar(roomNum, meanHum, align = "center", color = "b")
@@ -132,10 +170,15 @@ with PdfPages(graphLoc) as pdf:
 	hm.set_xlabel('Room')
 	hm.set_ylabel("Humidty")
 	plt.title("Average Humidity of Room")
+	swag2 = hm.patches
+	meanHum = np.around(meanHum,decimals=1)
+	for swag, value in zip(swag2,meanHum):
+		height = swag.get_height()
+		hm.text(swag.get_x()+swag.get_width()/2, height+1,value,ha="center",va="bottom")	
 	plt.tight_layout()
 
 	pdf.savefig()
 	plt.close()
 
-	
+
 

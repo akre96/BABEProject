@@ -51,10 +51,16 @@ def sheetUse(Usage_Sheet):
 			#perDay = sorted(perDay.items())
 		perDay = {z:value.count(z) for z in value}
 		perDay = sorted(perDay.items())
-		averagePerDay = np.mean([item[1] for item in perDay])
+		dateRange = perDay[-1][0] - perDay[0][0]
+		dRange = (dateRange.days)
+		if (dRange > 0):
+			averagePerDay = (np.sum([item[1] for item in perDay])/dRange) * (7/5)
+		else:
+			averagePerDay = 0
 
 		averageDict[key] = averagePerDay
 	sortRooms = sorted(averageDict.keys())
 	sortAvg = [averageDict[x] for x in sortRooms]
+	
 		
 	return sortRooms, sortAvg, averageDict
