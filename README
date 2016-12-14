@@ -2,16 +2,16 @@ OVERVIEW:
 
 This project is an analysis software for the Baby Associated Built Environment Microbiome Project (BABE Project).
 
-It takes data from a sensor which measures temperature, humidity, and beam breaks whenever a door is opened. The software will return a summary of a single rooms data to the terminal and produce save-able graphs of the data.
+It takes data from sensors which measures temperature, humidity, and beam breaks whenever a door is opened. The software will return a summary of all available room data to the terminal and produce save-able graphs of the data.
 
-To use type "python tool.py" in the terminal after selecting the project directory.
+To use type "python allRooms.py" in the terminal after selecting the project directory.
 
-When asked for room number enter an integer. You must have already placed the appropriate files in the rooms respective folder. 
+You must have already placed the appropriate files in the rooms folder. 
 
 
 DATA STRUCTURE:
 
-The temperature and humidity data from each sensor is stored in one  file (TH_roomnumber.txt) and the beam break data is stored in another (BB_roomnumber.txt) where roomnumber the assigned number to the room. (eg. “BB_21.txt”)
+The temperature and humidity data from each sensor is stored in one  file (TH_roomnumber.txt) and the beam break data is stored in another (BB_roomnumber.txt) where roomnumber the assigned number to the room. (e.g. “BB_21.txt”)
 
 Store data for each room in its respective directory within the data folder. For example data from room 20 would go in “data/room/20/“.
 
